@@ -3,6 +3,23 @@
 Fecha de inspección: 27 de octubre de 2026. Propuesta para revisar con el equipo;
 no se han creado ni modificado tarjetas de Trello.
 
+## Hitos actualizados por el equipo
+
+Fechas comunicadas por el usuario el 27 de octubre de 2026. Esta actualización
+prevalece sobre las fechas anteriores de las guías locales.
+
+| Hito | Fecha | Contenido y estado del plazo |
+|---|---|---|
+| Entrega 1 | 2 de noviembre de 2026 | README y al menos dos specs funcionales |
+| Entrega 2 | 16 de noviembre de 2026 | Arquitectura y decisiones de implementación |
+| Final | 11 de diciembre de 2026 | Hito final; fecha límite de entrega del material por confirmar |
+
+La prioridad inmediata es dejar el README y las specs revisados el 1 de
+noviembre, como objetivo interno, y presentar la Entrega 1 antes de su plazo.
+Las specs describen el comportamiento y los criterios de aceptación previstos;
+no dependen de tener ya implementado el piloto. Las incógnitas experimentales
+se documentan como restricciones o supuestos pendientes de confirmar.
+
 ## Qué está comprobado
 
 Se han localizado los ocho PDF y seis carpetas de pilas exportadas en
@@ -99,7 +116,8 @@ durante el desarrollo; no se deja para la última semana.
 | Tarjeta | Ventana propuesta | Resultado verificable | Dependencias |
 |---|---|---|---|
 | 1. Cerrar inventario, calibración y procedencia | 27-30 oct. | Seis pilas registradas, escalas por eje, dudas y grupos experimentales documentados | Archivos recibidos |
-| 2. Acordar alcance y validación con la entidad | 27 oct.-3 nov. | Objetivo, medidas, criterios de exclusión y evaluación aceptados; petición de datos preparada | Hallazgos de 1 |
+| 2. Acordar alcance y validación con la entidad | 27-30 oct. | Propuesta de objetivo, medidas, exclusiones y evaluación revisada; petición de datos preparada y dudas pendientes registradas | Hallazgos de 1 |
+| E1. Preparar y entregar README y specs | 27 oct.-1 nov.; plazo 2 nov. | README y al menos dos specs revisados, con alcance, restricciones y criterios verificables; PR de entrega | Hallazgos disponibles de 1 y 2; las confirmaciones pendientes se documentan |
 | 3. Cargar y visualizar una pila piloto | 30 oct.-5 nov. | Canal DAPI, desplazamiento Z, vistas XY/XZ/YZ y escala física correctos | 1 |
 | 4. Segmentar y revisar el piloto | 4-11 nov. | Máscara 3D por instancias editable, correcciones guardadas y fallos identificados | 3 |
 | 5. Mantener arquitectura y decisiones de implementación | 2-13 nov. | ARCHITECTURE, al menos dos ADR, README y specs coherentes; preparar entrega del 16 nov. | 2-4 |
@@ -107,8 +125,8 @@ durante el desarrollo; no se deja para la última semana.
 | 7. Validar la medición | 16-25 nov. | Referencia manual revisada, error por instancia y error geométrico, sensibilidad de medidas | 6 |
 | 8. Decidir viabilidad del predictor y construir pares | 23-27 nov. | Tabla de entradas/salidas y particiones por grupo, o justificación de alcance descriptivo | 1, 2, 6 |
 | 9. Comparar predictores si hay datos adecuados | 26 nov.-4 dic. | Media de entrenamiento, regresión regularizada y candidato para pocos datos con idénticas particiones | 7, 8 |
-| 10. Cerrar demo, resultados y reproducibilidad | 30 nov.-9 dic. | Ejecución completa, exportaciones, dependencias y limitaciones; revisión con entidad | 6-9 según viabilidad |
-| 11. Preparar presentación y entregar | 7-11 dic.; defensa semana 14 dic. | Presentación ≤10 min, PDF, vídeo de respaldo y PR; versión subida al menos dos días antes de defender | 10 |
+| 10. Cerrar demo, resultados y reproducibilidad | 30 nov.-7 dic. | Ejecución completa, exportaciones, dependencias y limitaciones; revisión con entidad | 6-9 según viabilidad |
+| 11. Preparar presentación y entrega final | 1-9 dic.; final 11 dic. | Presentación, PDF, vídeo de respaldo y ensayo listos; confirmar plazo de entrega del material y preparar PR | Resultados disponibles; cierre tras 10 |
 
 Checklist 1: comprobar TIFF/XML e índices Z; registrar escalas y canal; vincular
 recortes a adquisición/scaffold; localizar séptima pila y pedir originales sin
@@ -118,6 +136,11 @@ comprobadas, pero la procedencia experimental sigue abierta.
 Checklist 2: acordar objetivo de análisis nuclear; confirmar célula/tiempo/patrón;
 solicitar tablas LAS X y datos existentes; dejar anotado qué condiciones permiten
 evaluar predicción. No enviar mensajes a la entidad sin autorización del usuario.
+
+Checklist E1: redactar README (problema, motivación, alcance, equipo y estructura);
+redactar al menos dos specs para carga/visualización y segmentación/medición;
+definir criterios observables, unidades y exclusiones; dejar la predicción
+condicionada a los datos; revisar coherencia y preparar el PR para el 2 nov.
 
 Checklist 3: ordenar Z numéricamente; leer canales desde metadatos; visualizar
 anisotropía sin deformar proporciones; excluir texto/barra y guardar configuración.
@@ -155,19 +178,23 @@ Checklist 10: reproducir una ejecución desde instalación limpia; comprobar
 salidas y mensajes de error; preparar una demo breve; revisar utilidad y
 conclusiones con la entidad y recoger su visto bueno.
 
-Checklist 11: confirmar día de defensa; redactar motivación, solución, evidencia
-y límites; ensayar diez minutos; comprobar compatibilidad y vídeo; subir PR
-dentro del plazo. El cierre interno del 11 dic. deja margen si se defiende el 14.
+Checklist 11: confirmar el plazo de entrega del material del hito final del
+11 de diciembre; redactar motivación, solución, evidencia y límites; ensayar
+diez minutos; comprobar compatibilidad y vídeo; preparar y subir el PR dentro
+del plazo que se confirme. El cierre interno del 9 dic. es un objetivo de
+preparación, no una fecha oficial de entrega. No se presupone una antelación
+mínima de dos días mientras el plazo actualizado siga pendiente.
 
 ## Fechas de la asignatura usadas
 
-La fuente local específica `evaluacion/entrega-3.md` indica semana del
-14 de diciembre de 2026 y una versión entregada al menos dos días antes.
-El 18 de diciembre que aparece en README es un placeholder. Falta confirmar
-el día exacto y cualquier actualización del profesorado.
+Se usan las fechas actualizadas por el usuario: Entrega 1 el 2 nov., Entrega 2
+el 16 nov. y final el 11 dic. de 2026. La fecha límite para entregar el material
+final sigue pendiente de confirmación; no se deduce del día del hito final.
 
-`evaluacion/entrega-2.md` fija el 16 de noviembre de 2026 a las 23:59 para la
-arquitectura y decisiones. El objetivo de este planning es la entrega final,
-pero se conserva ese hito intermedio.
+Las fechas anteriores de `evaluacion/entrega-1.md`, `evaluacion/entrega-3.md`
+y README están desactualizadas respecto a esta comunicación. Esas guías se
+conservan como documentación de la asignatura, sin reescribirlas como si el
+profesorado ya hubiese publicado versiones corregidas. El contenido de la
+Entrega 2 sigue siendo arquitectura y decisiones de implementación, el 16 nov.
 
 Tablero consultado: https://trello.com/b/19titMFj/proyecto-ii-scaffolds
