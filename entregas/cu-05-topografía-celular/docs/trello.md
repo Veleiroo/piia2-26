@@ -7,8 +7,8 @@ Las fechas internas se distinguen de los hitos comunicados en cada tarjeta.
 
 | Tarjeta | Enlace |
 |---|---|
-| Cerrar inventario, calibración y procedencia | [Abrir tarjeta](https://trello.com/c/yBJ1OV77/6-cerrar-inventario-calibraci%C3%B3n-y-procedencia) |
-| Acordar alcance y validación con la entidad | [Abrir tarjeta](https://trello.com/c/hz0kEhsc/7-acordar-alcance-y-validaci%C3%B3n-con-la-entidad) |
+| Inventariar y calibrar las seis pilas nucleares | [Abrir tarjeta](https://trello.com/c/yBJ1OV77) |
+| Definir el piloto de segmentación y medidas nucleares | [Abrir tarjeta](https://trello.com/c/hz0kEhsc) |
 | Entrega 1 · README y specs · 2 de noviembre | [Abrir tarjeta](https://trello.com/c/ObpRxnpw/8-entrega-1-readme-y-specs-2-de-noviembre) |
 | Cargar y visualizar una pila piloto | [Abrir tarjeta](https://trello.com/c/KCod4lWf/9-cargar-y-visualizar-una-pila-piloto) |
 | Segmentar y revisar el piloto | [Abrir tarjeta](https://trello.com/c/RSeZhJmq/10-segmentar-y-revisar-el-piloto) |
@@ -20,6 +20,11 @@ Las fechas internas se distinguen de los hitos comunicados en cada tarjeta.
 | Cerrar demo, resultados y reproducibilidad | [Abrir tarjeta](https://trello.com/c/6jLBPGCa/16-cerrar-demo-resultados-y-reproducibilidad) |
 | Final · 11 de diciembre · presentación y material | [Abrir tarjeta](https://trello.com/c/ZYiF5tIp/17-final-11-de-diciembre-presentaci%C3%B3n-y-material) |
 
-Estado al aplicar el planning: 11 tarjetas en Pendiente, una auditoría en En curso y cinco tarjetas completadas en Hecho. La Entrega 1 encabeza Pendiente. Cada nueva tarjeta tiene criterios de cierre, resultado esperado y dependencias enlazadas.
+El inventario técnico y la calibración están completados en Hecho. El primer
+hito utiliza los TIFF y XML actuales para segmentar y medir núcleos. Conocer la
+geometría del scaffold o conseguir nuevos archivos no bloquea este trabajo.
+Las preguntas sobre capturas relacionadas y muestras independientes figuran
+en la evaluación del predictor. Cada tarjeta tiene criterios de cierre,
+resultado esperado y dependencias enlazadas; consultar el tablero para su estado actual.
 
 Responsables y revisores pendientes de reparto. El 11 de diciembre es el hito final; la fecha y hora de entrega del material siguen pendientes de confirmación. Las áreas de trabajo están indicadas en las descripciones de las tarjetas.

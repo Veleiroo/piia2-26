@@ -24,6 +24,18 @@ Las specs describen el comportamiento y los criterios de aceptación previstos;
 no dependen de tener ya implementado el piloto. Las incógnitas experimentales
 se documentan como restricciones o supuestos pendientes de confirmar.
 
+## Primer hito: segmentación nuclear con los datos actuales
+
+El piloto analiza la señal del núcleo: pila DAPI → máscara 3D por instancias
+revisada → volumen y medidas geométricas. No requiere reconstruir el scaffold
+ni conocer su forma, composición o posición física. G10 se conserva como una
+etiqueta; no se interpreta el valor 10 µm como profundidad, anchura u otra
+dimensión sin confirmación. Esa información no hace falta para la máscara.
+
+La relación entre recortes, capturas nucleares y muestras experimentales se
+comprobará al preparar la evaluación del predictor. No bloquea el piloto,
+las medidas nucleares ni la definición de las specs iniciales.
+
 ## Qué está comprobado
 
 Se han localizado los ocho PDF y seis carpetas de pilas exportadas en
@@ -62,22 +74,25 @@ El microscopio figura como STELLARIS 8 y el tipo de adquisición como Confocal.
 Los TIFF actuales son RGB uint8, incluso los del canal DAPI, y las imágenes
 visualizadas contienen barras de escala y texto integrados en sus píxeles.
 El RGB de visualización no equivale a tres canales biológicos. No se debe
-segmentar la barra como si fuera señal nuclear. Solicitar el .lif de origen
-o exportaciones monocanal sin anotaciones; el piloto puede avanzar con estas
-imágenes si excluye las anotaciones y registra sus limitaciones.
+segmentar la barra como si fuera señal nuclear. El piloto empieza con los TIFF
+y XML actuales, excluyendo las anotaciones y registrando las limitaciones.
+Si se pueden conseguir .lif o exportaciones monocanal sin texto, serán una
+mejora opcional, no un requisito de inicio.
 
 `control 2` y `control 3` comparten los tiempos de inicio y fin, y el segundo
 se denomina `Control 1d 63x2 02_Crop 2`. Son indicios de recortes de una misma
 adquisición. La comparación directa no encontró que todo `control 3` fuera un
 recorte vertical idéntico de `control 2` incluyendo anotaciones: no se afirma
 duplicación exacta ni solapamiento. Agrupar provisionalmente ambos para la
-evaluación y confirmar su procedencia con el grupo.
+evaluación del predictor y confirmar allí su procedencia con el grupo.
+Esta comprobación no bloquea la segmentación de los núcleos.
 
 Por nombres hay dos condiciones: control y G10. El conjunto disponible consta
 de seis pilas; no se han detectado planos ausentes en sus secuencias exportadas.
-No se han encontrado carpetas G80 o micropocillos. Falta conocer
-el número de scaffolds independientes, lotes/donantes y las dimensiones reales
-del patrón. El nombre `1d` sugiere un día, pendiente de confirmación experimental.
+No se han encontrado carpetas G80 o micropocillos. El número de muestras
+independientes y las entradas del predictor se aclararán en esa fase. El nombre
+`1d` sugiere un día, pendiente de confirmación experimental; tampoco es un
+requisito para calcular la máscara.
 Alexa 488 identifica el fluoróforo, no por sí solo la estructura marcada.
 
 ## Alcance que propongo
@@ -91,8 +106,9 @@ Con dos condiciones no se demuestra generalización a nuevas geometrías.
 La primera versión medirá volumen, ejes de un elipsoide equivalente y sus
 relaciones. Las definiciones y unidades deben quedar explícitas. Superficie y
 esfericidad se incorporarán después de evaluar su sensibilidad al paso Z y al
-contorno de segmentación. La orientación respecto al scaffold requiere conocer
-su dirección/superficie: la orientación en la imagen no la sustituye.
+contorno de segmentación. La orientación inicial, si se calcula, se expresará
+respecto a los ejes de la imagen. La orientación respecto al scaffold queda
+fuera del primer hito y necesitaría una referencia adicional.
 
 ## Trello: estructura y funcionamiento
 
@@ -110,8 +126,9 @@ marcarla completa y moverla son acciones distintas en Trello.
 Estado del tablero: Primera reunión ya está completada en Hecho, junto
 con Asignación de caso de uso, Primer contacto e Introducción al dominio.
 Posesión de datos se ha completado y movido a Hecho tras verificar la recepción
-de los archivos disponibles. La auditoría de calibración y procedencia tiene
-su propia tarjeta en En curso; falta confirmar la procedencia experimental.
+de los archivos disponibles. El inventario y la calibración de las seis pilas
+nucleares están comprobados y su tarjeta está en Hecho. Las dudas sobre la
+procedencia experimental se han trasladado a la evaluación del predictor.
 
 ## Tarjetas propuestas
 
@@ -121,27 +138,27 @@ durante el desarrollo; no se deja para la última semana.
 
 | Tarjeta | Ventana propuesta | Resultado verificable | Dependencias |
 |---|---|---|---|
-| 1. Cerrar inventario, calibración y procedencia | 27-30 oct. | Seis pilas registradas, escalas por eje, dudas y grupos experimentales documentados | Archivos recibidos |
-| 2. Acordar alcance y validación con la entidad | 27-30 oct. | Propuesta de objetivo, medidas, exclusiones y evaluación revisada; petición de datos preparada y dudas pendientes registradas | Hallazgos de 1 |
+| 1. Inventariar y calibrar las seis pilas nucleares | Completada el 27 oct. | Seis pilas registradas, canal DAPI, escalas por eje y límites de las exportaciones documentados | Archivos recibidos |
+| 2. Definir el piloto de segmentación y medidas nucleares | 27-30 oct. | Flujo y aceptación del primer ejemplo definidos con los archivos actuales | Inventario técnico disponible |
 | E1. Preparar y entregar README y specs | 27 oct.-1 nov.; plazo 2 nov. | README y al menos dos specs revisados, con alcance, restricciones y criterios verificables; PR de entrega | Hallazgos disponibles de 1 y 2; las confirmaciones pendientes se documentan |
 | 3. Cargar y visualizar una pila piloto | 30 oct.-5 nov. | Canal DAPI, desplazamiento Z, vistas XY/XZ/YZ y escala física correctos | 1 |
 | 4. Segmentar y revisar el piloto | 4-11 nov. | Máscara 3D por instancias editable, correcciones guardadas y fallos identificados | 3 |
 | 5. Mantener arquitectura y decisiones de implementación | 2-13 nov. | ARCHITECTURE, al menos dos ADR, README y specs coherentes; preparar entrega del 16 nov. | 2-4 |
-| 6. Medir y procesar las seis pilas | 9-20 nov. | Tabla por núcleo con unidades, procedencia y estado de calidad; máscaras guardadas | 4 |
+| 6. Medir y procesar las seis pilas | 9-20 nov. | Tabla por núcleo con unidades, pila de origen, ID y estado de calidad; máscaras guardadas | 4 |
 | 7. Validar la medición | 16-25 nov. | Referencia manual revisada, error por instancia y error geométrico, sensibilidad de medidas | 6 |
 | 8. Decidir viabilidad del predictor y construir pares | 23-27 nov. | Tabla de entradas/salidas y particiones por grupo, o justificación de alcance descriptivo | 1, 2, 6 |
 | 9. Comparar predictores si hay datos adecuados | 26 nov.-4 dic. | Media de entrenamiento, regresión regularizada y candidato para pocos datos con idénticas particiones | 7, 8 |
 | 10. Cerrar demo, resultados y reproducibilidad | 30 nov.-7 dic. | Ejecución completa, exportaciones, dependencias y limitaciones; revisión con entidad | 6-9 según viabilidad |
 | 11. Preparar presentación y entrega final | 1-9 dic.; final 11 dic. | Presentación, PDF, vídeo de respaldo y ensayo listos; confirmar plazo de entrega del material y preparar PR | Resultados disponibles; cierre tras 10 |
 
-Checklist 1: comprobar TIFF/XML e índices Z; registrar escalas y canal; vincular
-recortes a adquisición/scaffold; pedir originales de las seis pilas sin
-anotaciones. La calibración y la integridad dimensional iniciales ya están
-comprobadas, pero la procedencia experimental sigue abierta.
+Checklist 1 (completado): inventariar las seis pilas e índices Z; contrastar
+calibración X/Y/Z; identificar DAPI y formato RGB; documentar anotaciones y el
+carácter opcional de conseguir originales sin texto.
 
-Checklist 2: acordar objetivo de análisis nuclear; confirmar célula/tiempo/patrón;
-solicitar tablas LAS X y datos existentes; dejar anotado qué condiciones permiten
-evaluar predicción. No enviar mensajes a la entidad sin autorización del usuario.
+Checklist 2: definir flujo pila nuclear → máscara 3D por instancias revisada →
+medidas; definir exclusión de anotaciones y revisión de truncados/uniones;
+concretar volumen, ejes y relaciones con unidades; fijar aceptación usando
+los archivos actuales sin depender de nuevos datos ni de la geometría del scaffold.
 
 Checklist E1: redactar README (problema, motivación, alcance, equipo y estructura);
 redactar al menos dos specs para carga/visualización y segmentación/medición;
@@ -161,16 +178,19 @@ predicción; justificar dos decisiones reales; revisar criterios de aceptación;
 preparar el PR de la entrega intermedia sin inventar resultados.
 
 Checklist 6: calcular volumen y ejes en coordenadas físicas; señalar truncados,
-uniones y artefactos; exportar una fila por núcleo con identificadores de campo,
-adquisición y scaffold cuando se conozcan; no contar cada plano como ejemplo.
+uniones y artefactos; exportar una fila por núcleo con pila de origen, ID,
+escala física y estado de calidad; no contar cada plano como ejemplo.
 
 Checklist 7: delimitar referencia manual de evaluación; medir detección/unión/
 separación además del solapamiento; comparar geometría automática y revisada;
 separar el conjunto usado para ajustar parámetros del que se usa para evaluarlos
 en la medida que permitan los grupos disponibles.
 
-Checklist 8: confirmar pares reales; agrupar recortes de una adquisición;
-registrar réplicas por condición; decidir antes de elegir el modelo. Si no hay
+Checklist 8: confirmar entradas documentadas y pares reales; mantener G10 como
+etiqueta hasta aclarar su significado; identificar recortes de una misma captura
+nuclear y grupos experimentales; registrar réplicas y definir particiones sin
+imágenes relacionadas entre entrenamiento y evaluación. Estas preguntas
+corresponden a la predicción, no a los requisitos de la máscara. Si no hay
 independencia suficiente, entregar análisis descriptivo y prototipo experimental,
 sin una afirmación de generalización predictiva.
 
