@@ -59,31 +59,31 @@ Estado da entrega	Esta tarefa non require que entregue nada desde a Rede
 Estado das cualificacións	Sen cualificar
 Tempo restante	6 días 8 horas restante
 Última modificación	-
-Comentarios a entrega	
+Comentarios a entrega
 ComentariosComentarios (0)
 Criterio de cualificación
 Rúbrica
-Claridad del proyecto	
+Claridad del proyecto
 Mejoras necesarias: el proyecto es vago o genérico; no queda claro qué es exactamente, qué problema resuelve específicamente, o por qué es relevante.
 0 puntos
 Bien hecho: el README comunica de forma inequívoca qué es el proyecto, qué problema resuelve, por qué es interesante y a quién va dirigido. Un lector nuevo entiende sin ambigüedad la misión del proyecto.
 1 puntos
-Definición del alcance	
+Definición del alcance
 Mejoras necesarias: el alcance es difuso o incompleto; no se sabe dónde termina el proyecto o qué está fuera de él; hay elementos ambiguos.
 0 puntos
 Bien hecho: el README delimita con precisión qué entra en el proyecto y, igual de importante, qué queda explícitamente fuera. El lector entiende los límites del problema a resolver.
 1 puntos
-Intención y precisión de las specs	
+Intención y precisión de las specs
 Mejoras necesarias: las specs son superficiales o solo nombran funcionalidades sin explicar qué hacen realmente ni por qué importan; faltan restricciones o supuestos.
 0 puntos
 Bien hecho: cada spec articula claramente qué hay que construir (descripción precisa de la funcionalidad, no solo su nombre) y por qué (el problema que resuelve, el beneficio esperado). Las restricciones y supuestos están explícitos.
 1 puntos
-Verificabilidad de criterios de aceptación	
+Verificabilidad de criterios de aceptación
 Mejoras necesarias: los criterios son subjetivos, circulares o no verificables ("el modelo debe ser bueno", "debe funcionar correctamente"); no permiten una evaluación objetiva.
 0 puntos
 Bien hecho: los criterios de aceptación de cada spec son observables y comprobables: alguien que no es del equipo puede verificar si la funcionalidad cumple o no. Evitan términos vagos como "bien", "suficientemente", "adecuadamente".
 1 puntos
-Coherencia interna	
+Coherencia interna
 Mejoras necesarias: las specs parecen desconectadas entre sí o del proyecto; hay funcionalidades que no encajan con el alcance; el proyecto parece una colección de ideas sin hilo conductor.
 0 puntos
 Bien hecho: las funcionalidades de las specs se derivan lógicamente del alcance definido en el README; cada una tiene sentido en el contexto del proyecto; no hay funcionalidades aisladas o que se contradigan; el equipo y el caso de uso forman un todo coherente.
