@@ -73,8 +73,9 @@ recorte vertical idéntico de `control 2` incluyendo anotaciones: no se afirma
 duplicación exacta ni solapamiento. Agrupar provisionalmente ambos para la
 evaluación y confirmar su procedencia con el grupo.
 
-Por nombres hay dos condiciones: control y G10. No se han encontrado carpetas
-G80 o micropocillos ni la séptima pila mencionada en el contexto. Falta conocer
+Por nombres hay dos condiciones: control y G10. El conjunto disponible consta
+de seis pilas; no se han detectado planos ausentes en sus secuencias exportadas.
+No se han encontrado carpetas G80 o micropocillos. Falta conocer
 el número de scaffolds independientes, lotes/donantes y las dimensiones reales
 del patrón. El nombre `1d` sugiere un día, pendiente de confirmación experimental.
 Alexa 488 identifica el fluoróforo, no por sí solo la estructura marcada.
@@ -134,7 +135,7 @@ durante el desarrollo; no se deja para la última semana.
 | 11. Preparar presentación y entrega final | 1-9 dic.; final 11 dic. | Presentación, PDF, vídeo de respaldo y ensayo listos; confirmar plazo de entrega del material y preparar PR | Resultados disponibles; cierre tras 10 |
 
 Checklist 1: comprobar TIFF/XML e índices Z; registrar escalas y canal; vincular
-recortes a adquisición/scaffold; localizar séptima pila y pedir originales sin
+recortes a adquisición/scaffold; pedir originales de las seis pilas sin
 anotaciones. La calibración y la integridad dimensional iniciales ya están
 comprobadas, pero la procedencia experimental sigue abierta.
 
