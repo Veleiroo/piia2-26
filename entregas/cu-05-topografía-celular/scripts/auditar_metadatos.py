@@ -1,6 +1,6 @@
 """Auditoría de las exportaciones Leica, sin modificar las imágenes originales.
 
-Ejecutar desde la raíz del repositorio: python3 scripts/auditar_metadatos.py
+Ejecutar desde la carpeta del equipo: python3 scripts/auditar_metadatos.py
 Requiere tifffile. La salida JSON contiene una fila por carpeta, no por célula.
 """
 import argparse
@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 
 import tifffile
 
-REPO = Path(__file__).resolve().parents[1]
+PROJECT = Path(__file__).resolve().parents[1]
 
 
 def audit(data):
@@ -79,8 +79,8 @@ def audit(data):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=REPO / "data")
-    parser.add_argument("--output", type=Path, default=REPO / "tmp" / "inventario-metadatos.json")
+    parser.add_argument("--data", type=Path, default=PROJECT / "data")
+    parser.add_argument("--output", type=Path, default=PROJECT / "tmp" / "inventario-metadatos.json")
     args = parser.parse_args()
     result = audit(args.data)
     output = args.output

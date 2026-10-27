@@ -1,7 +1,11 @@
 # Propuesta de planning hasta la entrega final
 
-Fecha de inspección: 27 de octubre de 2026. Propuesta para revisar con el equipo;
-no se han creado ni modificado tarjetas de Trello.
+Fecha de inspección: 27 de octubre de 2026. Planning aprobado y aplicado en Trello.
+Los enlaces a las tarjetas están en [trello.md](trello.md).
+
+Todo el material del equipo está en `entregas/cu-05-topografía-celular/`,
+dentro del fork de la asignatura. Las rutas y comandos de este documento son
+relativos a esa carpeta, salvo las referencias a las guías de la asignatura.
 
 ## Hitos actualizados por el equipo
 
@@ -96,21 +100,22 @@ principal y un revisor del equipo, resultado esperado, checklist corto,
 dependencias y enlace a la evidencia. Los nombres se decidirán con el equipo;
 no se infieren cuentas Trello a partir de usuarios GitHub.
 
-Usar etiquetas Datos, Segmentación, Medidas, Predicción, Entrega y Bloqueada,
-sin crear más listas. Limitar En curso a dos o tres tarjetas para todo el equipo.
+Las áreas Datos, Segmentación, Medidas, Predicción y Entrega se indican en las
+descripciones. Los bloqueos se registrarán con su causa y dependencia.
+Limitar En curso a dos o tres tarjetas para todo el equipo.
 Una tarjeta pasa a Hecho al cumplir su checklist y enlazar el resultado revisado;
 marcarla completa y moverla son acciones distintas en Trello.
 
-Estado leído del tablero: Primera reunión ya está completada en Hecho, junto
+Estado del tablero: Primera reunión ya está completada en Hecho, junto
 con Asignación de caso de uso, Primer contacto e Introducción al dominio.
-Posesión de datos sigue en Pendiente. Propuesta: dar por finalizada la recepción
-de los archivos disponibles y abrir una tarjeta separada para su auditoría;
-que falten originales o una séptima pila no borra la recepción ya realizada.
+Posesión de datos se ha completado y movido a Hecho tras verificar la recepción
+de los archivos disponibles. La auditoría de calibración y procedencia tiene
+su propia tarjeta en En curso; falta confirmar la procedencia experimental.
 
 ## Tarjetas propuestas
 
-Fechas internas propuestas, no compromisos ya aceptados. Se revisarán cuando
-se conozca la dedicación de cada integrante. La documentación se mantiene
+Fechas internas de seguimiento incluidas en el planning aprobado. Se revisarán
+según la dedicación de cada integrante. La documentación se mantiene
 durante el desarrollo; no se deja para la última semana.
 
 | Tarjeta | Ventana propuesta | Resultado verificable | Dependencias |
