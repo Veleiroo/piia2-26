@@ -1,2 +1,5 @@
 # Imágenes y metadatos experimentales locales.
 /data/
+
+# Archivos temporales de trabajo y resultados de inspección.
+/tmp/
