@@ -3,3 +3,6 @@
 
 # Archivos temporales de trabajo y resultados de inspección.
 /tmp/
+
+# Estado local de Jupyter.
+.ipynb_checkpoints/

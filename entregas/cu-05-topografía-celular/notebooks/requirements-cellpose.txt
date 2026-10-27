@@ -1,0 +1,2 @@
+# Instalar además de requirements-base.txt. Los pesos se descargan al usar el modelo.
+cellpose==4.2.1.1
