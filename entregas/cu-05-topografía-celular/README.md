@@ -21,8 +21,9 @@ El flujo previsto es:
 
 La herramienta se dirige al grupo investigador que aporta los datos y necesita
 analizar la respuesta nuclear a distintas condiciones de cultivo. Las imágenes
-disponibles muestran la señal nuclear; la geometría del scaffold se incorpora
-como información experimental cuando esté documentada.
+disponibles muestran la señal nuclear; el scaffold se caracteriza mediante su
+tipo de patrón y su medida nominal, documentados en la información experimental
+y el artículo de referencia.
 
 ## Motivación
 
@@ -74,8 +75,11 @@ el predictor.
 
 Los TIFF son exportaciones RGB de visualización con anotaciones integradas. El
 procesamiento debe excluir texto y barras de escala, conservar los originales y
-respetar la calibración de cada eje. `G10` se conserva como etiqueta experimental:
-su nombre por sí solo no determina una dimensión física del patrón.
+respetar la calibración de cada eje. Del scaffold disponemos del tipo de patrón
+y su medida nominal, descritos en el artículo de referencia. Estas son las
+entradas previstas para el LLM: se registrarán el valor, la unidad y qué dimensión
+describe la medida. Para un control liso, una medida de patrón puede no aplicar.
+La correspondencia con etiquetas como `G10` se recoge desde esa descripción.
 
 Ya existe un inventario de metadatos y un notebook exploratorio de segmentación.
 Cellpose es el candidato actual del piloto; la asociación entre capas, las

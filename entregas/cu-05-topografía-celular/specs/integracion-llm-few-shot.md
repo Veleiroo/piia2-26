@@ -15,11 +15,15 @@ salida inicial será una estimación de medidas geométricas, sin generar una im
 
 ## Entradas y salidas
 
-**Consulta:** identificador del caso, tipo de patrón y descriptores físicos que
-estén documentados, con sus unidades. Entre los posibles descriptores están
-anchura, profundidad y separación entre elementos. Se podrán incorporar tipo
-celular o tiempo de cultivo cuando estén confirmados y sean necesarios para
-comparar los ejemplos. Los campos ausentes se indican explícitamente.
+**Consulta:** identificador del caso, descripción del tipo de patrón y su medida
+nominal, según la información disponible y el artículo de referencia. El tipo
+indica, por ejemplo, si la superficie es lisa o presenta surcos o agujeros. La
+medida incluye valor, unidad y la dimensión que describe según esa fuente.
+Para una superficie lisa, se admite que la medida de patrón sea `no_aplica`.
+
+Estas son las entradas topográficas disponibles para la primera versión. No se
+presuponen medidas adicionales de profundidad, separación, orientación o curvatura,
+ni se exige reconstruir el scaffold. Se conserva la fuente de la descripción.
 
 **Ejemplos few-shot:** pares de esos mismos descriptores con una respuesta nuclear
 observada, su procedencia y su grupo experimental. Para reducir la influencia de
@@ -46,8 +50,8 @@ no identifica la forma exacta de un núcleo individual aún no observado.
    mediante identificadores explícitos. Conservar las unidades, el número de
    núcleos incluidos en el resumen y las exclusiones aplicadas.
 2. **Comprobar viabilidad.** Verificar que se conoce la respuesta objetivo y la
-   procedencia de los ejemplos. La etiqueta `G10` puede utilizarse como categoría;
-   no se traduce automáticamente a una dimensión de 10 µm.
+   procedencia de los ejemplos. Asociar cada etiqueta experimental, como `G10`,
+   con el tipo y la medida nominal documentados en la descripción del patrón.
 3. **Separar ejemplos y evaluación.** Agrupar imágenes relacionadas y réplicas
    según su procedencia experimental. Todos los datos de un mismo grupo quedan
    en la misma partición. Elegir los ejemplos del contexto únicamente entre los
@@ -65,16 +69,17 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 
 ## Restricciones y supuestos
 
-- El LLM recibe descriptores de topografía y condiciones conocidas para la
-  consulta. Las medidas nucleares de esa consulta son la respuesta que se quiere
-  predecir; solo se aportan para los ejemplos de entrenamiento.
+- El LLM recibe el tipo de patrón y su medida nominal para la consulta. Las
+  medidas nucleares de esa consulta son la respuesta que se quiere predecir;
+  solo se aportan para los ejemplos de entrenamiento.
 - Las respuestas observadas proceden de máscaras revisadas visualmente, sin
   ground truth de segmentación. Por ello, el error del predictor expresa su
   diferencia respecto a las medidas obtenidas por el flujo de CV; no demuestra
   exactitud respecto a la morfología real y puede heredar errores de las máscaras.
-- Se emplearán las variables realmente disponibles. Los artículos pueden orientar
-  la elección de descriptores, pero sus condiciones no se atribuyen a nuestras
-  muestras sin confirmación.
+- La descripción del artículo se usa para caracterizar nominalmente cada tipo
+  de scaffold. Se conserva qué dimensión representa la medida; un mismo valor
+  numérico no implica la misma geometría para patrones distintos. No se
+  requieren otras propiedades físicas como entrada de esta primera versión.
 - Los pocos datos actuales cubren las etiquetas control y G10. No permiten dar
   por demostrada la predicción para nuevas geometrías o condiciones.
 - Los planos Z, recortes y aumentos de una misma adquisición no se convierten en
@@ -97,8 +102,8 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 
 | ID | Condición verificable |
 |---|---|
-| LLM-01 | Cada ejemplo puede rastrearse hasta sus descriptores experimentales, grupo de origen y núcleos CV admitidos. El resumen de respuesta coincide con las medianas de esos núcleos y conserva unidades y tamaño del grupo. |
-| LLM-02 | Una consulta con campos obligatorios ausentes, unidades incompatibles o sin ejemplos utilizables devuelve `datos_insuficientes` con la causa y no produce medidas numéricas como si fueran válidas. Los campos obligatorios se fijan en la configuración del experimento antes de evaluarlo. |
+| LLM-01 | Cada ejemplo puede rastrearse hasta el tipo de patrón, la medida nominal y su fuente, el grupo de origen y los núcleos CV admitidos. El resumen de respuesta coincide con las medianas de esos núcleos y conserva unidades y tamaño del grupo. |
+| LLM-02 | Una consulta sin tipo de patrón, sin una medida necesaria para describirlo, con unidades incompatibles o sin ejemplos utilizables devuelve `datos_insuficientes` con la causa. Una superficie lisa con medida `no_aplica` se admite sin inventar un tamaño de patrón. |
 | LLM-03 | El prompt guardado permite verificar qué ejemplos recibió el modelo, cuántos son y qué consulta se realizó. Ninguna medida objetivo de la consulta ni dato de un grupo reservado aparece entre los ejemplos few-shot. |
 | LLM-04 | La respuesta se valida contra un esquema con los estados y campos definidos. Una predicción admitida contiene volumen y ejes positivos en las unidades acordadas, `a ≥ b ≥ c` y relaciones calculadas coherentes; las salidas inválidas quedan registradas como fallos. |
 | LLM-05 | Cada ejecución registra modelo y versión o identificador disponible, plantilla, configuración de generación, selección y orden de ejemplos, consulta y respuesta original. Estos registros permiten repetir la configuración, aunque un servicio externo pueda introducir variación. |
@@ -107,7 +112,8 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 
 ## Decisiones pendientes
 
-Confirmar los descriptores físicos disponibles y la agrupación experimental;
+Registrar la correspondencia entre cada muestra y el tipo y medida descritos en
+el artículo, con sus unidades y fuente; confirmar la agrupación experimental;
 elegir el LLM, la plantilla y el número de ejemplos; y definir las particiones
 con los pares que finalmente puedan construirse. La integración se evaluará
 aunque no supere a la referencia: el criterio de esta funcionalidad es producir

@@ -49,9 +49,9 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
    fragmentados, truncados por los bordes o afectados por una zona excluida.
    Una máscara automática queda identificada como propuesta hasta su revisión.
 5. **Asociar entre capas.** Antes de medir un núcleo completo, establecer qué
-   regiones de planos sucesivos pertenecen a la misma instancia. El piloto 2D
-   puede ejecutarse por separado; sus IDs locales no se interpretan como
-   identidades persistentes ni habilitan por sí solos medidas volumétricas.
+   regiones de planos sucesivos pertenecen al mismo núcleo y asignarles un
+   identificador común para toda la pila. Revisar las asociaciones dudosas,
+   especialmente cuando aparecen uniones, fragmentaciones o señal tenue.
 6. **Medir y exportar.** Calcular las medidas usando coordenadas físicas y una
    máscara con identidad coherente en Z. Exportar las incidencias junto a cada
    instancia y distinguir las medidas admitidas para análisis de las que
@@ -63,8 +63,9 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
   derivados se guardan separados de ellos.
 - El espaciado entre planos se obtiene del XML; la barra visible y el DPI del
   TIFF no bastan para calcular volumen. Se respeta la anisotropía X/Y/Z.
-- La geometría del scaffold no es necesaria para segmentar el núcleo. `G10`
-  funciona como etiqueta mientras sus descriptores físicos no estén confirmados.
+- La segmentación no requiere conocer la posición o la geometría completa del
+  scaffold. Su tipo de patrón y medida nominal se conservan como metadatos para
+  asociarlos después con las medidas nucleares y construir los ejemplos del LLM.
 - Las exportaciones RGB de 8 bits limitan la información de intensidad disponible.
   Aumentar contraste puede amplificar ruido; cada transformación debe registrarse.
 - Las zonas con anotaciones no contienen señal recuperable mediante exclusión.
@@ -76,8 +77,21 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
   plantearse una evaluación cuantitativa; no es un requisito del alcance actual.
 - Las capas de una pila y varios núcleos de una misma adquisición no se contarán
   automáticamente como réplicas experimentales independientes.
-- Esta spec define el resultado funcional completo. La asociación entre capas y
-  las medidas volumétricas son pasos pendientes posteriores al piloto 2D actual.
+
+## Del piloto por capas a las medidas del núcleo completo
+
+El piloto actual usa Cellpose para segmentar cada plano XY de forma independiente.
+Produce una máscara por capa, con identificadores locales: el objeto con ID `1`
+en una capa no tiene por qué ser el mismo núcleo que el objeto con ID `1` en la
+siguiente. Apilar esas máscaras sin asociar sus objetos no permite identificar
+qué vóxeles pertenecen a cada núcleo completo.
+
+El siguiente paso consiste en relacionar las regiones que corresponden al mismo
+núcleo a lo largo de Z y reunirlas bajo un único identificador. Con esa máscara
+por núcleo y la calibración X/Y/Z se podrán calcular el volumen y los ejes.
+La asociación y esas medidas están previstas en esta spec, pero todavía no están
+resueltas en el piloto. Se puede partir de las máscaras 2D de Cellpose; este paso
+no exige utilizar un modelo de segmentación 3D.
 
 ## Criterios de aceptación
 
