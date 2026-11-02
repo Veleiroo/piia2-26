@@ -100,21 +100,60 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 
 ## Criterios de aceptación
 
-| ID | Condición verificable |
-|---|---|
-| LLM-01 | Cada ejemplo puede rastrearse hasta el tipo de patrón, la medida nominal y su fuente, el grupo de origen y los núcleos CV admitidos. El resumen de respuesta coincide con las medianas de esos núcleos y conserva unidades y tamaño del grupo. |
-| LLM-02 | Una consulta sin tipo de patrón, sin una medida necesaria para describirlo, con unidades incompatibles o sin ejemplos utilizables devuelve `datos_insuficientes` con la causa. Una superficie lisa con medida `no_aplica` se admite sin inventar un tamaño de patrón. |
-| LLM-03 | El prompt guardado permite verificar qué ejemplos recibió el modelo, cuántos son y qué consulta se realizó. Ninguna medida objetivo de la consulta ni dato de un grupo reservado aparece entre los ejemplos few-shot. |
-| LLM-04 | La respuesta se valida contra un esquema con los estados y campos definidos. Una predicción admitida contiene volumen y ejes positivos en las unidades acordadas, `a ≥ b ≥ c` y relaciones calculadas coherentes; las salidas inválidas quedan registradas como fallos. |
-| LLM-05 | Cada ejecución registra modelo y versión o identificador disponible, plantilla, configuración de generación, selección y orden de ejemplos, consulta y respuesta original. Estos registros permiten repetir la configuración, aunque un servicio externo pueda introducir variación. |
-| LLM-06 | Cuando los grupos disponibles lo permiten, se realiza una evaluación reservando grupos completos y se exportan predicciones LLM y de la media de entrenamiento para los mismos casos. Se informa MAE por variable con sus unidades, número de grupos evaluados, cobertura de respuestas válidas y fallos o abstenciones. |
-| LLM-07 | Si los grupos o los pares disponibles impiden esa evaluación, el informe registra el motivo y distingue la demostración funcional de una validación predictiva. No se genera una puntuación de generalización a partir de capas o recortes relacionados. |
+Para comprobar que esta parte funciona, revisaremos lo siguiente:
+
+1. **Los ejemplos contienen los datos necesarios.** Cada uno relaciona un tipo
+   de patrón y su medida con las medidas nucleares obtenidas mediante CV. Se
+   indica de qué muestra proceden y qué núcleos se han usado para calcular las
+   medianas, de modo que podamos comprobar los valores.
+
+2. **El sistema avisa si falta información.** Si no se indica el tipo de patrón,
+   falta su medida cuando es necesaria o no hay ejemplos disponibles, explica
+   qué falta y no devuelve una predicción. Un control liso se admite sin asignarle
+   un tamaño de patrón que no tiene.
+
+3. **El LLM devuelve una respuesta que podamos utilizar.** Al recibir una consulta
+   y ejemplos completos, devuelve el volumen y los tres ejes, con sus unidades,
+   junto a una explicación breve. Se comprueba que los valores sean positivos y
+   que los ejes estén ordenados de mayor a menor. Si la respuesta no se puede leer
+   o incumple estas condiciones, se guarda como un fallo.
+
+4. **La prueba no incluye la respuesta que queremos predecir.** Las medidas
+   nucleares del caso que estamos probando no aparecen entre los ejemplos del
+   prompt. Tampoco se usan recortes o capas de esa misma captura como si
+   fueran ejemplos independientes.
+
+5. **Podemos consultar qué ocurrió en cada ejecución.** Se guardan el modelo y
+   su configuración, las instrucciones, los ejemplos en el orden enviado, la
+   consulta y la respuesta original. Así podemos revisar una predicción y repetir
+   la prueba con la misma configuración.
+
+6. **Comparamos el resultado con una alternativa sencilla.** Si podemos reservar
+   muestras independientes para probar, comparamos el LLM con predecir siempre
+   la media de las medidas de entrenamiento. Usamos los mismos casos para ambos
+   y calculamos cuánto se alejan, en promedio, de las medidas obtenidas por CV
+   (error absoluto medio, MAE). También indicamos cuántos casos se han probado y
+   en cuántos no se ha obtenido una respuesta válida.
+
+7. **Las conclusiones reflejan los datos que tenemos.** Si no hay muestras
+   independientes suficientes para esa comparación, explicamos la limitación
+   y mostramos únicamente que la integración funciona. La revisión visual de
+   las máscaras y una demostración del LLM no se presentan como pruebas de
+   exactitud predictiva.
 
 ## Decisiones pendientes
 
-Registrar la correspondencia entre cada muestra y el tipo y medida descritos en
-el artículo, con sus unidades y fuente; confirmar la agrupación experimental;
-elegir el LLM, la plantilla y el número de ejemplos; y definir las particiones
-con los pares que finalmente puedan construirse. La integración se evaluará
-aunque no supere a la referencia: el criterio de esta funcionalidad es producir
-una comparación trazable y comunicar sus resultados y límites.
+Antes de implementar y probar esta parte tenemos que decidir:
+
+- **Qué LLM vamos a usar y cómo ejecutarlo:** elegir el modelo y si lo ejecutamos
+  en nuestro equipo o mediante un servicio externo.
+- **Cómo presentarle los ejemplos:** redactar las instrucciones, elegir cuántos
+  ejemplos incluir y cómo seleccionarlos entre los disponibles.
+- **Qué muestras podemos reservar para probarlo:** aclarar qué carpetas son
+  capturas distintas del microscopio y cuáles pueden ser recortes de la misma
+  captura. Con esa información separaremos los ejemplos del prompt de los casos
+  de prueba.
+
+Además, dejaremos registrada la correspondencia entre cada muestra y el tipo y
+la medida del scaffold descritos en el artículo. Esa información es la que se
+usará para preparar las entradas del modelo.
