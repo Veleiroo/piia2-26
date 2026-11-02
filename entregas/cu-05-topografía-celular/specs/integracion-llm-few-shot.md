@@ -68,6 +68,10 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 - El LLM recibe descriptores de topografía y condiciones conocidas para la
   consulta. Las medidas nucleares de esa consulta son la respuesta que se quiere
   predecir; solo se aportan para los ejemplos de entrenamiento.
+- Las respuestas observadas proceden de máscaras revisadas visualmente, sin
+  ground truth de segmentación. Por ello, el error del predictor expresa su
+  diferencia respecto a las medidas obtenidas por el flujo de CV; no demuestra
+  exactitud respecto a la morfología real y puede heredar errores de las máscaras.
 - Se emplearán las variables realmente disponibles. Los artículos pueden orientar
   la elección de descriptores, pero sus condiciones no se atribuyen a nuestras
   muestras sin confirmación.

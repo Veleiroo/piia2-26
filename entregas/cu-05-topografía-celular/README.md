@@ -33,8 +33,10 @@ un LLM puede aprovechar pocos ejemplos para estimar esas medidas a partir de la
 topografía.
 
 El interés del proyecto está en conectar ambos pasos y evaluar sus límites con
-los datos reales disponibles. El error al segmentar y medir se analizará por
-separado del error de predicción.
+los datos reales disponibles. Las máscaras se revisarán visualmente: actualmente
+no disponemos de ground truth para cuantificar la exactitud de la segmentación.
+Las medidas extraídas servirán para contrastar las predicciones, teniendo en
+cuenta que también dependen de la calidad de las máscaras.
 
 ## Alcance
 

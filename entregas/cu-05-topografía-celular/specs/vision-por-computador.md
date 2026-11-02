@@ -9,7 +9,7 @@ respuestas observadas de los ejemplos del [módulo LLM](integracion-llm-few-shot
 
 Medir el núcleo que aparece en una imagen es un paso previo a predecir su forma
 desde la topografía. La funcionalidad debe conservar la relación entre imagen,
-máscara, medida y muestra para poder identificar el origen de un error.
+máscara, medida y muestra para poder revisar incidencias o medidas dudosas.
 
 ## Entradas y salidas
 
@@ -69,9 +69,11 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
   Aumentar contraste puede amplificar ruido; cada transformación debe registrarse.
 - Las zonas con anotaciones no contienen señal recuperable mediante exclusión.
   Un núcleo que las toque se marca para revisión.
-- Actualmente no hay máscaras de referencia. Se preparará una selección manual
-  revisada para evaluar segmentación y medición. No se atribuirán valores de
-  Dice, IoU o exactitud a las propuestas sin esa referencia.
+- Actualmente no hay máscaras de referencia. La calidad de la segmentación se
+  revisará visualmente y se registrarán los fallos observables. Esa revisión no
+  permite cuantificar la exactitud ni convertir las máscaras en ground truth.
+  Si más adelante se dispone de anotaciones de referencia adecuadas, podrá
+  plantearse una evaluación cuantitativa; no es un requisito del alcance actual.
 - Las capas de una pila y varios núcleos de una misma adquisición no se contarán
   automáticamente como réplicas experimentales independientes.
 - Esta spec define el resultado funcional completo. La asociación entre capas y
@@ -86,13 +88,13 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
 | CV-03 | Cada máscara coincide con la forma de su imagen de trabajo, contiene etiquetas enteras y mantiene a cero las zonas excluidas. Si existe submuestreo, el registro permite localizarla en las coordenadas originales y recuperar su escala física. |
 | CV-04 | Para una pila piloto se pueden inspeccionar la señal y los contornos en planos centrales y extremos, guardar una corrección y distinguir el resultado revisado de la propuesta automática. Las incidencias quedan vinculadas a la instancia afectada. |
 | CV-05 | Un resultado de segmentación 2D independiente se identifica como tal. La exportación de volumen por núcleo solo se habilita al disponer de una máscara con asociación revisada entre capas. |
-| CV-06 | Para una máscara de prueba con `N` vóxeles y calibración conocida, el volumen exportado coincide con `N × Δx × Δy × Δz`, salvo redondeo de presentación. Los ejes están ordenados, expresados en µm y las relaciones exportadas coinciden con los cocientes definidos. |
+| CV-06 | Para una máscara de prueba con `N` vóxeles y calibración conocida, el volumen exportado coincide con `N × Δx × Δy × Δz`, salvo redondeo de presentación. Los ejes están ordenados, expresados en µm y las relaciones exportadas coinciden con los cocientes definidos. Esta comprobación verifica el cálculo geométrico, no la exactitud de la segmentación en imágenes reales. |
 | CV-07 | La tabla permite recuperar para cada fila su pila, instancia, máscara, unidades y estado de calidad. Los núcleos truncados o pendientes de revisión aparecen señalados y pueden excluirse de los ejemplos destinados al predictor. |
-| CV-08 | Cada ejecución guarda la configuración y la procedencia necesarias para repetirla. La evaluación sobre la futura referencia manual identifica los casos usados para ajustar parámetros y los usados para comprobarlos, y registra los errores observados sin presentar la revisión visual como una métrica de exactitud. |
+| CV-08 | Cada ejecución guarda la configuración y la procedencia necesarias para repetirla. El registro de revisión identifica los casos inspeccionados, los fallos visibles y las correcciones realizadas. Sin máscaras de referencia no se informa Dice, IoU ni una tasa de error de segmentación. |
 
 ## Decisiones pendientes
 
-Concretar el método de asociación entre capas, cerrar los parámetros de contraste
-y segmentación tras revisar los extremos tenues y seleccionar la referencia
-manual. El piloto actual sirve para tomar estas decisiones; esta entrega no
-presupone que ya estén implementadas o validadas.
+Concretar el método de asociación entre capas y cerrar los parámetros de contraste
+y segmentación tras revisar los extremos tenues. El piloto actual sirve para
+tomar estas decisiones; esta entrega no presupone que ya estén implementadas o
+validadas cuantitativamente.
