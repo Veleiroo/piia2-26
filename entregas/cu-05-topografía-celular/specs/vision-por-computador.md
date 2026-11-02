@@ -23,7 +23,7 @@ de segmentación. Se admiten las exportaciones actuales, aunque incluyan anotaci
 - Máscaras de etiquetas enteras: `0` para fondo e identificadores positivos para
   las instancias. Se conserva la propuesta automática y, si se modifica, una
   versión revisada diferenciada.
-- Una tabla por núcleo medido con identificador de pila e instancia, volumen en
+- Una tabla con una fila por núcleo medido, con identificador de pila e instancia, volumen en
   µm³, ejes `a ≥ b ≥ c` en µm y relaciones `a/b` y `b/c`. Los ejes corresponden a
   un elipsoide equivalente; sus relaciones describen forma sin asumir la
   orientación de la superficie del scaffold.
@@ -95,20 +95,60 @@ no exige utilizar un modelo de segmentación 3D.
 
 ## Criterios de aceptación
 
-| ID | Condición verificable |
-|---|---|
-| CV-01 | Una pila con índices Z desordenados por nombre se carga en orden numérico. Ante un plano ausente, duplicado, dimensiones incompatibles o calibración inválida, el flujo identifica el problema antes de exportar medidas físicas. |
-| CV-02 | El registro identifica el canal nuclear y los archivos empleados. Los overlays y el segundo canal de `canales g10 2` no se contabilizan como muestras nucleares adicionales. |
-| CV-03 | Cada máscara coincide con la forma de su imagen de trabajo, contiene etiquetas enteras y mantiene a cero las zonas excluidas. Si existe submuestreo, el registro permite localizarla en las coordenadas originales y recuperar su escala física. |
-| CV-04 | Para una pila piloto se pueden inspeccionar la señal y los contornos en planos centrales y extremos, guardar una corrección y distinguir el resultado revisado de la propuesta automática. Las incidencias quedan vinculadas a la instancia afectada. |
-| CV-05 | Un resultado de segmentación 2D independiente se identifica como tal. La exportación de volumen por núcleo solo se habilita al disponer de una máscara con asociación revisada entre capas. |
-| CV-06 | Para una máscara de prueba con `N` vóxeles y calibración conocida, el volumen exportado coincide con `N × Δx × Δy × Δz`, salvo redondeo de presentación. Los ejes están ordenados, expresados en µm y las relaciones exportadas coinciden con los cocientes definidos. Esta comprobación verifica el cálculo geométrico, no la exactitud de la segmentación en imágenes reales. |
-| CV-07 | La tabla permite recuperar para cada fila su pila, instancia, máscara, unidades y estado de calidad. Los núcleos truncados o pendientes de revisión aparecen señalados y pueden excluirse de los ejemplos destinados al predictor. |
-| CV-08 | Cada ejecución guarda la configuración y la procedencia necesarias para repetirla. El registro de revisión identifica los casos inspeccionados, los fallos visibles y las correcciones realizadas. Sin máscaras de referencia no se informa Dice, IoU ni una tasa de error de segmentación. |
+Para comprobar que esta parte funciona, revisaremos lo siguiente:
+
+1. **Las capas se cargan en el orden correcto.** Se ordenan por su posición Z,
+   aunque los nombres de archivo no aparezcan ordenados. Si falta una capa, está
+   duplicada o hay problemas con las dimensiones o la escala física, el programa
+   avisa antes de calcular medidas.
+
+2. **Se utiliza la señal del núcleo.** Los metadatos permiten identificar el canal
+   DAPI y se guarda qué archivos se han utilizado. Las imágenes que combinan
+   varios canales y el segundo canal de `canales g10 2` no se cuentan como nuevas
+   muestras nucleares.
+
+3. **Las máscaras encajan con las imágenes.** Tienen las mismas dimensiones que
+   la imagen procesada y usan `0` para el fondo y números distintos para los
+   objetos detectados. Las zonas de texto y barras de escala que hayamos excluido
+   quedan fuera de las máscaras. Si reducimos la resolución, se conserva la
+   información necesaria para relacionar el resultado con la imagen original.
+
+4. **Podemos revisar y corregir el resultado.** En una pila piloto se muestran
+   los contornos sobre las imágenes, tanto en las capas centrales como en los
+   extremos con menos señal. Se puede guardar una corrección sin perder la
+   máscara automática y dejar anotados los problemas encontrados.
+
+5. **Cada núcleo mantiene su identidad entre capas antes de medir su volumen.**
+   Las regiones asociadas al mismo núcleo comparten un identificador en toda la
+   pila. Mientras solo tengamos máscaras independientes por capa, el resultado
+   se presenta como segmentación 2D y no se exportan volúmenes por núcleo.
+
+6. **Los cálculos respetan las dimensiones físicas.** Con una máscara de prueba
+   y una escala conocidas, comprobamos que el volumen coincide con el número de
+   vóxeles multiplicado por `Δx × Δy × Δz`. Los ejes se expresan en µm, se ordenan
+   de mayor a menor y sus relaciones coinciden con `a/b` y `b/c`. Esto comprueba
+   los cálculos; no demuestra que las máscaras de las imágenes reales sean exactas.
+
+7. **Cada medida se puede relacionar con su núcleo de origen.** La tabla contiene
+   una fila por núcleo, con su pila, identificador, máscara y medidas con unidades.
+   Se señalan los núcleos cortados por el borde y los que necesitan revisión,
+   para poder excluirlos de los ejemplos del predictor.
+
+8. **Queda guardado cómo se obtuvo el resultado.** Se conservan el modelo y su
+   versión, los parámetros, la escala, las zonas excluidas y las correcciones.
+   La revisión indica qué imágenes se han inspeccionado y qué fallos se han
+   observado. Al no disponer de ground truth, no se calculan Dice, IoU ni una
+   tasa de error de segmentación.
 
 ## Decisiones pendientes
 
-Concretar el método de asociación entre capas y cerrar los parámetros de contraste
-y segmentación tras revisar los extremos tenues. El piloto actual sirve para
-tomar estas decisiones; esta entrega no presupone que ya estén implementadas o
-validadas cuantitativamente.
+Antes de completar esta parte tenemos que decidir:
+
+- **Cómo relacionar las máscaras entre capas:** elegir cómo reconocer que dos
+  regiones de capas sucesivas pertenecen al mismo núcleo y cómo revisar los
+  casos dudosos.
+- **Qué ajustes de imagen y de Cellpose usaremos:** comparar las opciones de
+  contraste y los parámetros de segmentación, especialmente en las capas con
+  poca señal, y guardar la configuración elegida.
+- **Cómo haremos las correcciones:** elegir una forma de editar las máscaras,
+  guardar los cambios y marcar los núcleos que sigan siendo dudosos.
