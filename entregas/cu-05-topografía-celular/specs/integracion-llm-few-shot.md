@@ -94,9 +94,12 @@ no identifica la forma exacta de un núcleo individual aún no observado.
 - La explicación del LLM se presenta como justificación de una estimación, sin
   atribuirle una relación causal demostrada. Tampoco se interpreta una confianza
   verbal del modelo como incertidumbre calibrada.
-- Si no es posible reservar un grupo independiente con ejemplos en entrenamiento,
-  se podrá demostrar la integración, pero el resultado se identificará como
-  prototipo sin evaluación predictiva independiente.
+- Para ejecutar la evaluación predictiva frente a la referencia sencilla se fija
+  un mínimo provisional de **4 grupos experimentales independientes**: al menos
+  **2 grupos en entrenamiento** (para seleccionar ejemplos en contexto) y al
+  menos **2 casos independientes de prueba** fuera del prompt. Si no se alcanza
+  ese mínimo, se podrá demostrar la integración, pero el resultado se
+  identificará como prototipo sin evaluación predictiva independiente.
 
 ## Criterios de aceptación
 
@@ -123,23 +126,27 @@ Para comprobar que esta parte funciona, revisaremos lo siguiente:
    prompt. Tampoco se usan recortes o capas de esa misma captura como si
    fueran ejemplos independientes.
 
-5. **Podemos consultar qué ocurrió en cada ejecución.** Se guardan el modelo y
-   su configuración, las instrucciones, los ejemplos en el orden enviado, la
-   consulta y la respuesta original. Así podemos revisar una predicción y repetir
-   la prueba con la misma configuración.
+5. **Podemos configurar el número de ejemplos y consultar qué ocurrió en cada ejecución.**
+   Se guardan el modelo y su configuración, el parámetro de número de ejemplos
+   solicitados, las instrucciones, los ejemplos en el orden enviado, la consulta
+   y la respuesta original. Se comprueba ejecutando una misma consulta con dos
+   valores distintos de ejemplos en contexto (por ejemplo, `k = 1` y `k = 2`) y
+   verificando en el registro guardado que el prompt incluye exactamente `1` y `2`
+   ejemplos respectivamente.
 
-6. **Comparamos el resultado con una alternativa sencilla.** Si podemos reservar
-   muestras independientes para probar, comparamos el LLM con predecir siempre
-   la media de las medidas de entrenamiento. Usamos los mismos casos para ambos
-   y calculamos cuánto se alejan, en promedio, de las medidas obtenidas por CV
-   (error absoluto medio, MAE). También indicamos cuántos casos se han probado y
-   en cuántos no se ha obtenido una respuesta válida.
+6. **Comparamos el resultado con una alternativa sencilla a partir del mínimo fijado.**
+   Cuando existan al menos 4 grupos experimentales independientes (mínimo 2
+   grupos en entrenamiento para ejemplos y 2 casos independientes de prueba),
+   comparamos el LLM con predecir siempre la media de las medidas de entrenamiento.
+   Usamos los mismos casos para ambos y calculamos cuánto se alejan, en promedio,
+   de las medidas obtenidas por CV (error absoluto medio, MAE). También indicamos
+   cuántos casos se han probado y en cuántos no se ha obtenido una respuesta válida.
 
-7. **Las conclusiones reflejan los datos que tenemos.** Si no hay muestras
-   independientes suficientes para esa comparación, explicamos la limitación
-   y mostramos únicamente que la integración funciona. La revisión visual de
-   las máscaras y una demostración del LLM no se presentan como pruebas de
-   exactitud predictiva.
+7. **Las conclusiones reflejan los datos que tenemos.** Si se dispone de menos de
+   4 grupos experimentales independientes (o menos de 2 casos de prueba
+   independientes), explicamos la limitación y mostramos únicamente que la
+   integración funciona. La revisión visual de las máscaras y una demostración
+   del LLM no se presentan como pruebas de exactitud predictiva.
 
 ## Decisiones pendientes
 

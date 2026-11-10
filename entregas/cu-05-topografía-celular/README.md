@@ -52,7 +52,8 @@ cuenta que también dependen de la calidad de las máscaras.
 - Exportación de máscaras, medidas y procedencia de cada resultado.
 - Construcción de ejemplos topografía–morfología y de un prototipo LLM
   *few-shot* con respuestas estructuradas y evaluación frente a una referencia
-  sencilla, cuando existan muestras independientes suficientes.
+  sencilla cuando existan al menos 4 grupos experimentales independientes
+  (mínimo 2 grupos para ejemplos en contexto y 2 casos independientes de prueba).
 
 ### Fuera de esta primera versión
 

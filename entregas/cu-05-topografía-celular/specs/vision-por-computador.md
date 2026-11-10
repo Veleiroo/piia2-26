@@ -134,11 +134,14 @@ Para comprobar que esta parte funciona, revisaremos lo siguiente:
    Se señalan los núcleos cortados por el borde y los que necesitan revisión,
    para poder excluirlos de los ejemplos del predictor.
 
-8. **Queda guardado cómo se obtuvo el resultado.** Se conservan el modelo y su
-   versión, los parámetros, la escala, las zonas excluidas y las correcciones.
-   La revisión indica qué imágenes se han inspeccionado y qué fallos se han
-   observado. Al no disponer de ground truth, no se calculan Dice, IoU ni una
-   tasa de error de segmentación.
+8. **Queda guardado cómo se obtuvo el resultado y los archivos originales no se modifican.**
+   Se conservan el modelo y su versión, los parámetros, la escala, las zonas
+   excluidas y las correcciones, y todas las salidas se guardan fuera de `data/`.
+   Se comprueba verificando después de procesar que las fechas de modificación
+   y los hashes SHA-256 de los archivos TIFF y XML de entrada coinciden con los
+   registrados antes de la ejecución. La revisión indica qué imágenes se han
+   inspeccionado y qué fallos se han observado. Al no disponer de ground truth,
+   no se calculan Dice, IoU ni una tasa de error de segmentación.
 
 ## Decisiones pendientes
 
