@@ -107,14 +107,16 @@ la integración LLM, la evaluación y la documentación del proyecto.
 ## Estructura de la carpeta
 
 Todo el material del equipo se mantiene en
-`entregas/cu-05-topografía-celular/`, dentro del fork de la asignatura.
+`entregas/cu-05-topografia-celular/`, dentro del fork de la asignatura.
 
 | Ruta | Contenido |
 |---|---|
 | `README.md` | Presentación, alcance y organización del proyecto. |
 | `specs/vision-por-computador.md` | Definición funcional de segmentación y medición nuclear. |
 | `specs/integracion-llm-few-shot.md` | Definición funcional del predictor LLM con ejemplos en contexto. |
-| `scripts/` | Código de auditoría de metadatos y prototipos de procesamiento. |
+| `src/topografia_celular/` | Paquete Python: lectura, preprocesado, Cellpose, exportación y ejecución por lotes. |
+| `tests/` | Pruebas de exclusión, escala, exportación y gestión de fallos. |
+| `pyproject.toml` | Instalación del paquete y comandos de terminal. |
 | `notebooks/` | Exploración de datos, comparación de máscaras y dependencias del piloto. |
 | `docs/` | Bibliografía, requisitos de la asignatura y planificación del proyecto. |
 | `data/` | Imágenes y metadatos experimentales locales; excluidos de Git. |
@@ -122,3 +124,29 @@ Todo el material del equipo se mantiene en
 
 La primera entrega comprende este README y las dos specs. La arquitectura y las
 decisiones de implementación se documentarán en la siguiente entrega.
+
+## Procesar las pilas
+
+El procesamiento se ejecuta desde el paquete Python; el notebook se mantiene
+para exploración. En el entorno `vpc2`, que ya contiene las dependencias del
+piloto, instalar el paquete local desde la carpeta del equipo:
+
+```bash
+python -m pip install --no-deps --no-build-isolation -e .
+python -m topografia_celular --todas --solo-validar
+python -m topografia_celular --todas --paso-xy 2
+```
+
+La comprobación previa valida archivos, calibración, exclusión y contraste, sin
+ejecutar Cellpose. Las seis pilas actuales contienen 407 planos DAPI; otros
+canales y overlays quedan fuera del lote de segmentación. La configuración
+predeterminada conserva la del piloto: `cpsam_v2`, contraste global, paso XY 2
+y umbrales 0.5/0.4. `--paso-xy 1` conserva la resolución nativa; cualquier cambio
+de configuración requiere revisar las máscaras resultantes.
+
+Las máscaras y su procedencia se guardan bajo `tmp/segmentacion-cellpose/`.
+Todavía tienen identificadores locales a cada plano: la asociación en Z y el
+cálculo de volúmenes son pasos posteriores.
+
+Ver [guía de procesamiento](docs/procesamiento.md) para estructura de salidas,
+opciones, incidencias y pruebas.

@@ -3,7 +3,13 @@
 Fecha de inspección: 27 de octubre de 2026. Planning aprobado y aplicado en Trello.
 Los enlaces a las tarjetas están en [trello.md](trello.md).
 
-Todo el material del equipo está en `entregas/cu-05-topografía-celular/`,
+Actualización del seguimiento: 10 de noviembre de 2026. Consultar
+[seguimiento-noviembre.md](seguimiento-noviembre.md) para bloqueos, acciones y
+rutina de reuniones. Este planning conserva las ventanas iniciales; el estado
+actual se consulta en Trello. El README y las specs entregadas describen el
+alcance vigente, incluido el prototipo LLM few-shot.
+
+Todo el material local del equipo está en `entregas/cu-05-topografia-celular/`,
 dentro del fork de la asignatura. Las rutas y comandos de este documento son
 relativos a esa carpeta, salvo las referencias a las guías de la asignatura.
 
@@ -18,11 +24,11 @@ prevalece sobre las fechas anteriores de las guías locales.
 | Entrega 2 | 16 de noviembre de 2026 | Arquitectura y decisiones de implementación |
 | Final | 11 de diciembre de 2026 | Hito final; fecha límite de entrega del material por confirmar |
 
-La prioridad inmediata es dejar el README y las specs revisados el 1 de
-noviembre, como objetivo interno, y presentar la Entrega 1 antes de su plazo.
-Las specs describen el comportamiento y los criterios de aceptación previstos;
-no dependen de tener ya implementado el piloto. Las incógnitas experimentales
-se documentan como restricciones o supuestos pendientes de confirmar.
+La Entrega 1 figura completada en Trello. La prioridad documental actual es la
+Entrega 2 del 16 de noviembre antes de las 23:59 (Europe/Madrid), con revisión
+interna el 13. La arquitectura y los ADR pueden redactarse con la evidencia
+disponible sin esperar nuevos datos ni el cierre completo del piloto. Se
+distinguirá lo implementado de lo previsto y de los supuestos pendientes.
 
 ## Primer hito: segmentación nuclear con los datos actuales
 
@@ -41,7 +47,7 @@ las medidas nucleares ni la definición de las specs iniciales.
 Se han localizado los ocho PDF y seis carpetas de pilas exportadas en
 `data/`. No hay JSON de adquisición: hay dos XML por carpeta.
 El inventario reproducible se genera en `tmp/inventario-metadatos.json` con
-`python3 scripts/auditar_metadatos.py` (requiere `tifffile`). Una carpeta no equivale a una célula ni
+`python -m topografia_celular.auditoria` (requiere instalar el paquete local y `tifffile`). Una carpeta no equivale a una célula ni
 a una réplica biológica.
 
 | Carpeta | Planos Z | Dimensión Y × X | Canales científicos descritos |
@@ -112,14 +118,17 @@ fuera del primer hito y necesitaría una referencia adicional.
 
 ## Trello: estructura y funcionamiento
 
-Mantener Pendiente, En curso y Hecho. Cada tarjeta tendrá un responsable
+Mantener Pendiente, En curso, Hecho y Bloqueadas. Cada tarjeta tendrá un responsable
 principal y un revisor del equipo, resultado esperado, checklist corto,
 dependencias y enlace a la evidencia. Los nombres se decidirán con el equipo;
 no se infieren cuentas Trello a partir de usuarios GitHub.
 
 Las áreas Datos, Segmentación, Medidas, Predicción y Entrega se indican en las
-descripciones. Los bloqueos se registrarán con su causa y dependencia.
-Limitar En curso a dos o tres tarjetas para todo el equipo.
+descripciones. Los bloqueos se registrarán con causa, dependencia, alcance,
+acción realizada, siguiente acción, responsable, revisión y criterio de desbloqueo.
+Objetivo: dos tareas técnicas simultáneas y máximo tres tarjetas en curso para
+todo el equipo, contando el seguimiento. Actualizar el tablero en cada reunión
+y registrar decisiones y evidencias reales.
 Una tarjeta pasa a Hecho al cumplir su checklist y enlazar el resultado revisado;
 marcarla completa y moverla son acciones distintas en Trello.
 
@@ -196,8 +205,9 @@ sin una afirmación de generalización predictiva.
 
 Checklist 9: definir pocas entradas y salidas; elegir métricas como MAE por
 variable; ajustar transformaciones usando solo entrenamiento; comparar en las
-mismas particiones, guardar predicciones y explicar límites. TabPFN o LLM son
-candidatos, no decisiones ya tomadas. Si no se cumple 8, esta tarjeta se cierra
+mismas particiones, guardar predicciones y explicar límites. La spec entregada
+define un LLM few-shot frente a la media de entrenamiento; la regresión es
+opcional y el LLM concreto se justificará mediante ADR. Si no se cumple 8, esta tarjeta se cierra
 como no viable con justificación, sin fabricar evaluación.
 
 Checklist 10: reproducir una ejecución desde instalación limpia; comprobar

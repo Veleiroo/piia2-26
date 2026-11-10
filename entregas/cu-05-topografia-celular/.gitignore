@@ -6,3 +6,8 @@
 
 # Estado local de Jupyter.
 .ipynb_checkpoints/
+
+# Cachés y metadatos del paquete Python local.
+__pycache__/
+*.py[cod]
+*.egg-info/

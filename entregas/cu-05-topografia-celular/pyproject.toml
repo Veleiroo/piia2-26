@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topografia-celular"
+version = "0.1.0"
+description = "Segmentación reproducible de pilas nucleares TIFF/Leica"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "tifffile>=2024.12.12"]
+
+[project.optional-dependencies]
+cellpose = ["cellpose==4.2.1.1"]
+
+[project.scripts]
+segmentar-nucleos = "topografia_celular.cli:principal"
+auditar-pilas = "topografia_celular.auditoria:principal"
+
+[tool.setuptools.packages.find]
+where = ["src"]
