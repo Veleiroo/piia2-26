@@ -134,20 +134,16 @@ Para comprobar que esta parte funciona, revisaremos lo siguiente:
    verificando en el registro guardado que el prompt incluye exactamente `1` y `2`
    ejemplos respectivamente.
 
-6. **Comparamos el resultado con una alternativa sencilla a partir del mínimo fijado.**
-   Cuando existan al menos 4 grupos experimentales independientes (mínimo 2
-   grupos en entrenamiento para ejemplos y 2 casos independientes de prueba),
-   comparamos el LLM con predecir siempre la media de las medidas de entrenamiento.
-   Usamos los mismos casos para ambos y calculamos cuánto se alejan, en promedio,
-   de las medidas obtenidas por CV (error absoluto medio, MAE). También indicamos
-   cuántos casos se han probado y en cuántos no se ha obtenido una respuesta válida.
+6. **Comparamos el resultado con una alternativa sencilla.**
+   Se comparan las predicciones del LLM con una referencia base consistente en predecir siempre la media de las medidas de entrenamiento. Como mínimo, se realizará esta evaluación reservando una partición de los datos disponibles como prueba, calculando cuánto se alejan las predicciones, en promedio, de las medidas obtenidas por CV (error absoluto medio, MAE).
+
 
 7. **Las conclusiones reflejan los datos que tenemos.** Si se dispone de menos de
    4 grupos experimentales independientes (o menos de 2 casos de prueba
    independientes), explicamos la limitación y mostramos únicamente que la
    integración funciona. La revisión visual de las máscaras y una demostración
    del LLM no se presentan como pruebas de exactitud predictiva.
-
+   
 ## Decisiones pendientes
 
 Antes de implementar y probar esta parte tenemos que decidir:

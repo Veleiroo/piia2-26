@@ -120,8 +120,7 @@ Para comprobar que esta parte funciona, revisaremos lo siguiente:
 
 5. **Cada núcleo mantiene su identidad entre capas antes de medir su volumen.**
    Las regiones asociadas al mismo núcleo comparten un identificador en toda la
-   pila. Mientras solo tengamos máscaras independientes por capa, el resultado
-   se presenta como segmentación 2D y no se exportan volúmenes por núcleo.
+   pila. Como mínimo, se completará con éxito la asociación de máscaras entre planos (Z-tracking) y la exportación de volúmenes y ejes para una pila piloto completa, demostrando la viabilidad del flujo 3D.
 
 6. **Los cálculos respetan las dimensiones físicas.** Con una máscara de prueba
    y una escala conocidas, comprobamos que el volumen coincide con el número de
