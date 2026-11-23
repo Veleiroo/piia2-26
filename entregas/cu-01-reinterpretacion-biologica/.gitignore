@@ -1,0 +1,15 @@
+pia_venv/
+__pycache__/
+data/
+*.pyc
+*.csv
+*.xlsx
+*.gaf.gz
+*.gaf.gz.part
+*.obo
+*.obo.part
+llm_queue.jsonl
+.env
+.pytest_cache/
+.coverage
+htmlcov/
