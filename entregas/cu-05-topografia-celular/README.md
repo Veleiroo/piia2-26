@@ -112,6 +112,8 @@ Todo el material del equipo se mantiene en
 | Ruta | Contenido |
 |---|---|
 | `README.md` | Presentación, alcance y organización del proyecto. |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Diagrama, componentes e interfaces de la solución. |
+| [`decisions/`](decisions/) | Decisiones de implementación y alternativas. |
 | `specs/vision-por-computador.md` | Definición funcional de segmentación y medición nuclear. |
 | `specs/integracion-llm-few-shot.md` | Definición funcional del predictor LLM con ejemplos en contexto. |
 | `src/topografia_celular/` | Paquete Python: lectura, preprocesado, Cellpose, exportación y ejecución por lotes. |
@@ -122,8 +124,10 @@ Todo el material del equipo se mantiene en
 | `data/` | Imágenes y metadatos experimentales locales; excluidos de Git. |
 | `tmp/` | Resultados, máscaras, pesos y archivos temporales; excluidos de Git. |
 
-La primera entrega comprende este README y las dos specs. La arquitectura y las
-decisiones de implementación se documentarán en la siguiente entrega.
+La Entrega 2 añade la [arquitectura de la solución](ARCHITECTURE.md) y las
+decisiones sobre [segmentación con μSAM](decisions/segmentacion-revisable-con-microsam.md),
+[volumen a profundidad común](decisions/volumen-a-profundidad-comun.md) y
+[el diseño del few-shot](decisions/few-shot-estructurado-por-muestra.md).
 
 ## Procesar las pilas
 
